@@ -1,0 +1,185 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ── Base ────────────────────────────────────────────────────────────────── */
+@layer base {
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+}
+
+/* ── Blogify Custom Utilities ────────────────────────────────────────────── */
+@layer utilities {
+  /* Gradient text */
+  .gradient-text {
+    background: linear-gradient(135deg, #7C3AED 0%, #EC4899 60%, #06B6D4 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  /* Animated shifting gradient text */
+  .gradient-text-anim {
+    background: linear-gradient(135deg, #7C3AED, #EC4899, #06B6D4, #7C3AED);
+    background-size: 300% 300%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: gradShift 5s ease infinite;
+  }
+
+  /* Gradient background */
+  .bg-blogify {
+    background: linear-gradient(135deg, #7C3AED 0%, #EC4899 50%, #06B6D4 100%);
+  }
+
+  /* Glassmorphism card */
+  .glass-card {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(124, 58, 237, 0.1);
+  }
+  .dark .glass-card {
+    background: rgba(17, 17, 34, 0.85);
+    border: 1px solid rgba(124, 58, 237, 0.2);
+  }
+
+  /* Post card glow hover */
+  .post-card-hover:hover {
+    box-shadow: 0 20px 40px rgba(124, 58, 237, 0.15), 0 0 0 1px rgba(124, 58, 237, 0.05);
+    transform: translateY(-4px);
+  }
+
+  /* Orb decoration */
+  .orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    pointer-events: none;
+    z-index: 0;
+  }
+}
+
+/* ── Animations ──────────────────────────────────────────────────────────── */
+@keyframes gradShift {
+  0%, 100% { background-position: 0% 50%; }
+  50%       { background-position: 100% 50%; }
+}
+
+@keyframes fadeInUp {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes fadeInScale {
+  from { opacity: 0; transform: scale(0.95); }
+  to   { opacity: 1; transform: scale(1); }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-12px); }
+}
+
+@keyframes shimmerSlide {
+  0%   { transform: translateX(-100%); }
+  100% { transform: translateX(200%); }
+}
+
+@keyframes pulseGlow {
+  0%, 100% { box-shadow: 0 0 15px rgba(124, 58, 237, 0.3); }
+  50%       { box-shadow: 0 0 35px rgba(124, 58, 237, 0.6), 0 0 60px rgba(236, 72, 153, 0.2); }
+}
+
+@keyframes borderFlow {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes spin-slow {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+
+/* Animation classes */
+.fade-up          { animation: fadeInUp 0.5s ease-out both; }
+.fade-scale       { animation: fadeInScale 0.4s ease-out both; }
+.float-anim       { animation: float 4s ease-in-out infinite; }
+.spin-slow        { animation: spin-slow 10s linear infinite; }
+
+/* Stagger children */
+.stagger > *:nth-child(1)   { animation: fadeInUp 0.5s ease-out 0.05s both; }
+.stagger > *:nth-child(2)   { animation: fadeInUp 0.5s ease-out 0.10s both; }
+.stagger > *:nth-child(3)   { animation: fadeInUp 0.5s ease-out 0.15s both; }
+.stagger > *:nth-child(4)   { animation: fadeInUp 0.5s ease-out 0.20s both; }
+.stagger > *:nth-child(5)   { animation: fadeInUp 0.5s ease-out 0.25s both; }
+.stagger > *:nth-child(6)   { animation: fadeInUp 0.5s ease-out 0.30s both; }
+.stagger > *:nth-child(7)   { animation: fadeInUp 0.5s ease-out 0.35s both; }
+.stagger > *:nth-child(8)   { animation: fadeInUp 0.5s ease-out 0.40s both; }
+.stagger > *:nth-child(n+9) { animation: fadeInUp 0.5s ease-out 0.45s both; }
+
+/* ── Button shimmer effect ───────────────────────────────────────────────── */
+.btn-shine {
+  position: relative;
+  overflow: hidden;
+}
+.btn-shine::after {
+  content: '';
+  position: absolute;
+  top: 0; left: -100%;
+  width: 60%; height: 100%;
+  background: linear-gradient(90deg, transparent, rgba(255,255,255,0.3), transparent);
+  transition: left 0.5s ease;
+}
+.btn-shine:hover::after { left: 150%; }
+
+/* ── Skeleton shimmer ────────────────────────────────────────────────────── */
+.skeleton-shine {
+  position: relative;
+  overflow: hidden;
+}
+.skeleton-shine::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.5) 50%,
+    transparent 100%);
+  animation: shimmerSlide 1.6s infinite;
+}
+.dark .skeleton-shine::after {
+  background: linear-gradient(90deg,
+    transparent 0%,
+    rgba(255,255,255,0.07) 50%,
+    transparent 100%);
+}
+
+/* ── Prose (blog content) ────────────────────────────────────────────────── */
+.prose-blogify h1, .prose-blogify h2, .prose-blogify h3 {
+  font-weight: 800;
+  color: #1f2937;
+  line-height: 1.3;
+}
+.dark .prose-blogify h1,
+.dark .prose-blogify h2,
+.dark .prose-blogify h3  { color: #f9fafb; }
+.prose-blogify p         { color: #374151; line-height: 1.8; }
+.dark .prose-blogify p   { color: #d1d5db; }
+.prose-blogify a         { color: #7C3AED; }
+.dark .prose-blogify a   { color: #a78bfa; }
+.prose-blogify blockquote {
+  border-left: 4px solid #7C3AED;
+  background: rgba(124, 58, 237, 0.06);
+  padding: 12px 20px;
+  border-radius: 0 12px 12px 0;
+  font-style: italic;
+}
+.dark .prose-blogify blockquote {
+  background: rgba(124, 58, 237, 0.12);
+}
